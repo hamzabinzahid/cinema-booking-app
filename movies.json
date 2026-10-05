@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "title": "Interstellar",
+        "Duration": 169
+    },
+    {
+        "id": 2,
+        "title": "Inception",
+        "Duration": 148
+    },
+    {
+        "id": 3,
+        "title": "The Dark Knight",
+        "Duration": 152
+    }
+]
