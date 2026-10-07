@@ -1,0 +1,72 @@
+CREATE TABLE movies (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    duration INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE cinemas (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE screens (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    cinema_id BIGINT UNSIGNED NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (cinema_id) REFERENCES cinemas(id)
+);
+
+CREATE TABLE seats (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    screen_id BIGINT UNSIGNED NOT NULL,
+    seat_number VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (screen_id) REFERENCES screens(id),
+
+    UNIQUE KEY unique_screen_seat (screen_id, seat_number)
+);
+
+CREATE TABLE showtimes (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    movie_id BIGINT UNSIGNED NOT NULL,
+    screen_id BIGINT UNSIGNED NOT NULL,
+    start_time DATETIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (movie_id) REFERENCES movies(id),
+    FOREIGN KEY (screen_id) REFERENCES screens(id)
+);
+
+CREATE TABLE users (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE bookings (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT UNSIGNED NOT NULL,
+    showtime_id BIGINT UNSIGNED NOT NULL,
+    status ENUM('pending', 'confirmed', 'cancelled') DEFAULT 'confirmed',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (showtime_id) REFERENCES showtimes(id)
+);
+
+CREATE TABLE booking_seats (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    booking_id BIGINT UNSIGNED NOT NULL,
+    seat_id BIGINT UNSIGNED NOT NULL,
+
+    FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE,
+    FOREIGN KEY (seat_id) REFERENCES seats(id),
+
+    UNIQUE KEY unique_booking_seat (booking_id, seat_id)
+);

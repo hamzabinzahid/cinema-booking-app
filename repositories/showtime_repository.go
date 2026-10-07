@@ -1,9 +1,8 @@
 package repositories
 
 import (
-	"database/sql"
-
 	"cinema-booking/models"
+	"database/sql"
 )
 
 type ShowtimeRepository struct {
@@ -17,6 +16,5 @@ func NewShowtimeRepository(db *sql.DB) *ShowtimeRepository {
 }
 
 func (r *ShowtimeRepository) GetShowtimes() ([]models.Showtime, error) {
-	// Database query will be implemented here.
 	return nil, nil
 }

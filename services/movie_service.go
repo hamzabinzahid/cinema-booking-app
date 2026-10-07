@@ -18,3 +18,11 @@ func NewMovieService(repository *repositories.MovieRepository) *MovieService {
 func (s *MovieService) GetMovies() ([]models.Movie, error) {
 	return s.repository.GetMovies()
 }
+
+func (s *MovieService) AddMovie(movieData *models.Movie) error {
+	return s.repository.AddMovie(movieData)
+}
+
+func (s *MovieService) GetMovieByID(id uint) (*models.Movie, error) {
+	return s.repository.GetMovieByID(id)
+}
