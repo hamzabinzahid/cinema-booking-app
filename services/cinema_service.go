@@ -23,6 +23,6 @@ func (c *CinemaService) GetCinemaById(id int) (*models.Cinema, error) {
 	return c.service.GetCinemaById(id)
 }
 
-func (c *CinemaService) AddCinema(cinemaDetails models.Cinema) (*models.Cinema, error) {
+func (c *CinemaService) AddCinema(cinemaDetails models.CinemaDetails) (*models.CinemaDetails, error) {
 	return c.service.AddCinema(cinemaDetails)
 }

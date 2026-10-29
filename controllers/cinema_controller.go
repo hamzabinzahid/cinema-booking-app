@@ -4,6 +4,7 @@ import (
 	"cinema-booking/models"
 	"cinema-booking/services"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 )
@@ -23,16 +24,17 @@ func (c *CinemaController) GetCinemas(w http.ResponseWriter, r *http.Request) {
 
 	cinemas, err := c.service.GetCinemas()
 	if err != nil {
+		fmt.Println(err)
 		http.Error(w, "Failed to get cinemas list", http.StatusInternalServerError)
 	}
 
 	json.NewEncoder(w).Encode(cinemas)
 }
 
-func (c *CinemaController) GetCinemaById(w http.ResponseWriter, r *http.Response) {
+func (c *CinemaController) GetCinemaById(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	idStr := r.Request.PathValue("id")
+	idStr := r.PathValue("id")
 	idInt, err := strconv.Atoi(idStr)
 	if err != nil {
 		http.Error(w, "Failed to convert Cinema ID", http.StatusInternalServerError)
@@ -46,10 +48,10 @@ func (c *CinemaController) GetCinemaById(w http.ResponseWriter, r *http.Response
 	json.NewEncoder(w).Encode(cinema)
 }
 
-func (c *CinemaController) addCinema(w http.ResponseWriter, r *http.Request) {
+func (c *CinemaController) AddCinema(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	var cinema models.Cinema
+	var cinema models.CinemaDetails
 	json.NewDecoder(r.Body).Decode(&cinema)
 
 	data, err := c.service.AddCinema(cinema)
@@ -58,5 +60,4 @@ func (c *CinemaController) addCinema(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode(data)
-
 }

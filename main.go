@@ -33,24 +33,29 @@ func main() {
 	showtimeRepository := repositories.NewShowtimeRepository(db)
 	bookingRepository := repositories.NewBookingRepository(db)
 	cinemaRepository := repositories.NewCinemaRepository(db)
+	screenRepository := repositories.NewScreenRepository(db)
 
 	// Services
 	movieService := services.NewMovieService(movieRepository)
 	showtimeService := services.NewShowtimeService(showtimeRepository)
 	bookingService := services.NewBookingService(bookingRepository)
 	cinemaService := services.NewCinemaService(cinemaRepository)
+	screenService := services.NewScreenService(screenRepository)
 
 	// Controllers
 	movieController := controllers.NewMovieController(movieService)
 	showtimeController := controllers.NewShowtimeController(showtimeService)
 	bookingController := controllers.NewBookingController(bookingService)
 	cinemaController := controllers.NewCinemaController(cinemaService)
+	screenController := controllers.NewScreenController(screenService)
 
 	// Routes
 	routes.RegisterRoutes(
 		movieController,
 		showtimeController,
 		bookingController,
+		cinemaController,
+		screenController,
 	)
 
 	log.Println("Cinema server running on http://localhost:8080")
