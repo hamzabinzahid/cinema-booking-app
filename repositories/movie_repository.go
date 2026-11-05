@@ -51,23 +51,45 @@ func (r *MovieRepository) GetMovies() ([]models.Movie, error) {
 	return movies, nil
 }
 
-func (r *MovieRepository) AddMovie(movieRecord *models.Movie) error {
+func (r *MovieRepository) AddMovie(movieRecord *models.Movie) (*models.Movie, error) {
 
 	query := `
 	INSERT INTO movies (title, duration)
 	VALUES (?,?)
 	`
 
-	_, err := r.db.Exec(
+	addedMovie, err := r.db.Exec(
 		query,
 		movieRecord.Title,
 		movieRecord.Duration,
 	)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return err
+	movieId, err := addedMovie.LastInsertId()
+	if err != nil {
+		return nil, err
+	}
+
+	query = `
+	SELECT id,title,duration
+	FROM movies
+	WHERE id=?
+	`
+
+	var latestMovie models.Movie
+	err = r.db.QueryRow(query, movieId).Scan(
+		&latestMovie.ID,
+		&latestMovie.Title,
+		&latestMovie.Duration,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &latestMovie, nil
 }
 
 func (r *MovieRepository) GetMovieByID(id uint) (*models.Movie, error) {

@@ -19,7 +19,7 @@ func (s *MovieService) GetMovies() ([]models.Movie, error) {
 	return s.repository.GetMovies()
 }
 
-func (s *MovieService) AddMovie(movieData *models.Movie) error {
+func (s *MovieService) AddMovie(movieData *models.Movie) (*models.Movie, error) {
 	return s.repository.AddMovie(movieData)
 }
 

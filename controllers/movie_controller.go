@@ -58,12 +58,12 @@ func (c *MovieController) AddMovie(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = c.service.AddMovie(&movie)
+	data, err := c.service.AddMovie(&movie)
 	if err != nil {
 		http.Error(w, "Failed to create movie", http.StatusInternalServerError)
 		return
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(movie)
+	json.NewEncoder(w).Encode(data)
 }
