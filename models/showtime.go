@@ -8,3 +8,9 @@ type Showtime struct {
 	ScreenID  uint      `json:"screen_id"`
 	StartTime time.Time `json:"start_time"`
 }
+
+type ShowTimeRel struct {
+	Showtime
+	Movie  Movie
+	Screen Screen
+}

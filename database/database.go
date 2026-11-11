@@ -9,7 +9,7 @@ import (
 
 func Connect(host, port, user, password, dbname string) (*sql.DB, error) {
 	dsn := fmt.Sprintf(
-		"%s:%s@tcp(%s:%s)/%s",
+		"%s:%s@tcp(%s:%s)/%s?parseTime=true",
 		user,
 		password,
 		host,

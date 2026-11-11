@@ -30,7 +30,9 @@ func RegisterRoutes(
 
 	// Showtime routes
 	http.HandleFunc("GET /api/showtimes", showtimeController.GetShowtimes)
+	http.HandleFunc("GET /api/showtimes/movie/{movieid}", showtimeController.GetShowtimeByMovie)
 	http.HandleFunc("GET /api/showtimes/{id}", showtimeController.GetShowtimeByID)
+	http.HandleFunc("POST /api/add-showtime", showtimeController.AddShowtime)
 
 	// Booking routes
 	http.HandleFunc("POST /api/bookings", bookingController.CreateBooking)

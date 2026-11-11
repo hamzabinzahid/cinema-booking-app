@@ -15,6 +15,18 @@ func NewShowtimeService(repository *repositories.ShowtimeRepository) *ShowtimeSe
 	}
 }
 
-func (s *ShowtimeService) GetShowtimes() ([]models.Showtime, error) {
+func (s *ShowtimeService) GetShowtimes() ([]models.ShowTimeRel, error) {
 	return s.repository.GetShowtimes()
+}
+
+func (s *ShowtimeService) GetShowtimesByMovie(movieId uint) ([]models.ShowTimeRel, error) {
+	return s.repository.GetShowtimesByMovie(movieId)
+}
+
+func (s *ShowtimeService) GetShowtimesById(showTimeId uint) (*models.ShowTimeRel, error) {
+	return s.repository.GetShowtimesById(showTimeId)
+}
+
+func (s *ShowtimeService) AddShowtime(showTime models.Showtime) (*models.ShowTimeRel, error) {
+	return s.repository.AddShowtime(showTime)
 }
